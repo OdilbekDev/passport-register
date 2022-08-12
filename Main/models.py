@@ -7,6 +7,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    father_name = models.CharField(max_length=255)
     username = models.CharField(max_length=255, unique=True)
     email = models.EmailField(null=True, blank=True, unique=True)
     password = models.CharField(max_length=255)
@@ -15,6 +16,7 @@ class User(AbstractUser):
     telegram_id = models.IntegerField(blank=True, null=True, unique=True)
     address = models.CharField(max_length=255)
     age = models.IntegerField()
+    gender = models.CharField(max_length=255)
 
     def __str__(self):
         return self.username
@@ -79,16 +81,10 @@ class Application_Migration_Older(models.Model):
         return self.first_name
 
 
-class Queue_Citizenship(models.Model):
-    application = models.ForeignKey(Application_Citizenship, on_delete=models.CASCADE)
-    date = models.DateTimeField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
-class Queue_Migration(models.Model):
-    application = models.ForeignKey(Application_Migration, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+class Queue(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField()
 
 
 
@@ -150,3 +146,5 @@ class Info(models.Model):
     phone = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
     email = models.EmailField()
+
+
